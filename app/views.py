@@ -37,8 +37,11 @@ def about():
 
 @app.route('/news/<int:news_id>')
 def news_detail(news_id):
-    user_id = User.query.get(current_user.id)
-    is_admin = True if user_id.admin else False
+    if current_user.id:
+        user_id = User.query.get(current_user.id)
+        is_admin = True if user_id.admin else False
+    else:
+        is_admin = False
     # is_author = True if News.query.get(news_id).author_id == user_id else False
 
     data = {
