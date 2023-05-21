@@ -12,6 +12,7 @@ db = SQLAlchemy(app)
 from .views import *
 from .models import *
 
+app.app_context().push()
 db.create_all()
 
 manager = LoginManager(app)

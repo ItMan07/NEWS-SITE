@@ -37,11 +37,17 @@ def about():
 
 @app.route('/news/<int:news_id>')
 def news_detail(news_id):
+    user_id = User.query.get(current_user.id)
+    is_admin = True if user_id.admin else False
+    # is_author = True if News.query.get(news_id).author_id == user_id else False
+
     data = {
         'news': News.query.get(news_id),
         'categories': Category.query.all(),
         'is_auth': True if current_user.is_authenticated else False,
-        'show_categories': True
+        'show_categories': True,
+        # 'is_author': is_author,
+        'is_admin': is_admin
     }
     return render_template('news_detail.html', data=data)
 

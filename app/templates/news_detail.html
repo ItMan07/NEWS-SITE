@@ -17,8 +17,10 @@
     <hr>
     <p style="font-size: 20px">{{ data.news.text }}</p>
     <hr>
-    {% if data.is_auth %}
+    {#    {% if data.is_admin or data.is_author %}#}
+    {% if data.is_admin %}
         <a href="/news/{{ data.news.id }}/delete" class="btn btn-danger"> Стереть грехи </a>
         <a href="/news/{{ data.news.id }}/edit" class="btn btn-success"> Редактировать </a>
     {% endif %}
+
 {% endblock %}
