@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %} Добавить категорию лжи {% endblock %}
+
+{% block content %}
+    <h1 class="text-center"> Добавить категорию лжи </h1><br>
+    <hr>
+    <form method="post" action="" novalidate>
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <label>
+                {{ form.title.label }}
+            </label>
+            {{ form.title(class="form-control") }}
+        </div>
+        {% for error in form.title.errors %}
+            <div class="alert alert-danger" role="alert">
+                <span>
+                    {{ error }}
+                </span>
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+            <fieldset disabled>
+                <div class="col pt-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Не вызывать ОМОН</label>
+                </div>
+            </fieldset>
+        </div>
+        <br>
+        <h6 class="text-center">Нажимая данную кнопку вы добровольно подтверждаете, что
+            являетесь лицом или организацией осуществляющей функции иностранного агента,
+            а также подтверждаете свою виновность во всех ранее содеянных преступлениях</h6>
+    </form>
+{% endblock %}

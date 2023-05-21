@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Новости Солофьева. Главная страница {% endblock %}
+
+{% block content %}
+    <h1 class="text-center"> Главная страница </h1><br>
+    <h4 class="text-center">Это самые правдивые новости Солофьева, которым позавидует весь загнивающий Запад! (и даже
+        укронацисты!)</h4>
+    <hr>
+    {% for news in data.news %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ news.title }}</h5>
+                <p class="card-text">{{ news.text|truncate(80) }}</p>
+                <div class="row">
+                    <div class="col">
+                        <a href="{{ url_for('news_detail', news_id=news.id) }}"
+                           class="btn btn-primary">Читать далее</a>
+                    </div>
+                    {#                    <div class="col">#}
+                    {#                        <p class="text-right text-secondary">Дата: {{ news.create_date }}</p>#}
+                    {#                    </div>#}
+                </div>
+            </div>
+            <div class="card-footer">
+                {% if news.create_date %}
+                    <span class="card-link">Дата: {{ news.create_date.strftime('%d.%m.%Y') }}</span>
+                {% endif %}
+                {% if news.category %}
+                    <span class="card-link">Категория:
+                        <a href="{{ url_for('news_in_category', id=news.category.id) }}">{{ news.category.title }}</a>
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
