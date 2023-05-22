@@ -5,7 +5,7 @@
     <h1 class="text-center"> Регистрация </h1><br>
     <hr>
 
-    <form method="post" action="" novalidate>
+    <form method="post">
         {{ form.csrf_token }}
         <div class="row justify-content-center">
             <div class="col-8 text-center">
@@ -68,5 +68,6 @@
         <h6 class="text-center">Нажимая данную кнопку вы добровольно подтверждаете, что
             являетесь лицом или организацией осуществляющей функции иностранного агента,
             а также подтверждаете свою виновность во всех ранее содеянных преступлениях</h6>
+{#        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">#}
     </form>
 {% endblock %}

@@ -41,23 +41,23 @@
                 {% endfor %}
             </div>
         </div>
-{#        <div class="row justify-content-center">#}
-{#            <div class="col-8 text-center">#}
-{#                <div class="form-group form-check">#}
-{#                    <label>#}
-{#                        {{ form.remain_me.label }}#}
-{#                    </label>#}
-{#                    {{ form.remain_me(class="form-check-input") }}#}
-{#                </div>#}
-{#                {% for error in form.remain_me.errors %}#}
-{#                    <div class="alert alert-danger" role="alert">#}
-{#                <span>#}
-{#                    {{ error }}#}
-{#                </span>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        </div>#}
+        {#        <div class="row justify-content-center">#}
+        {#            <div class="col-8 text-center">#}
+        {#                <div class="form-group form-check">#}
+        {#                    <label>#}
+        {#                        {{ form.remain_me.label }}#}
+        {#                    </label>#}
+        {#                    {{ form.remain_me(class="form-check-input") }}#}
+        {#                </div>#}
+        {#                {% for error in form.remain_me.errors %}#}
+        {#                    <div class="alert alert-danger" role="alert">#}
+        {#                <span>#}
+        {#                    {{ error }}#}
+        {#                </span>#}
+        {#                    </div>#}
+        {#                {% endfor %}#}
+        {#            </div>#}
+        {#        </div>#}
         <br>
 
         {#        <div class="row justify-content-center form-check">#}
@@ -75,5 +75,6 @@
         <h6 class="text-center">Нажимая данную кнопку вы добровольно подтверждаете, что
             являетесь лицом или организацией осуществляющей функции иностранного агента,
             а также подтверждаете свою виновность во всех ранее содеянных преступлениях</h6>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     </form>
 {% endblock %}
