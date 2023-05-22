@@ -77,7 +77,7 @@ def create_news():
 
 @app.route('/create_news_hidden', methods=['POST', 'GET'])
 # @login_required
-def create_news():
+def create_news_hidden():
     form = NewsForm()
     data = {
         'categories': Category.query.all(),
