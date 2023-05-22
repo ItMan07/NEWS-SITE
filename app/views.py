@@ -214,10 +214,12 @@ def login():
 
 @app.route('/profile/<int:user_id>', methods=['POST', 'GET'])
 def profile(user_id):
+    user = User.query.get(current_user.id)
     data = {
         'categories': Category.query.all(),
         'is_auth': True if current_user.is_authenticated else False,
-        'show_categories': False
+        'show_categories': False,
+        'user_data': [user.username, user.email, user.reg_date, user.admin]
     }
     return render_template('profile.html', data=data)
 
