@@ -37,8 +37,10 @@ def about():
 
 @app.route('/news/<int:news_id>')
 def news_detail(news_id):
-    is_admin = False
-    if current_user.is_authenticated:
+    is_admin, is_auth = False, False
+    if current_user.is_anonymous:
+        is_admin, is_auth = False, False
+    elif current_user.is_authenticated:
         user = User.query.get(current_user.id)
         is_admin = True if user.admin == 1 else False
         # is_author = True if News.query.get(news_id).author_id == user_id else False
@@ -46,7 +48,7 @@ def news_detail(news_id):
     data = {
         'news': News.query.get(news_id),
         'categories': Category.query.all(),
-        'is_auth': True if current_user.is_authenticated else False,
+        'is_auth': is_auth,
         'show_categories': True,
         # 'is_author': is_author,
         'is_admin': is_admin

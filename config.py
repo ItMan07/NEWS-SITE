@@ -11,7 +11,7 @@ class Config:
     WTF_CSRF_CHECK_DEFAULT = False
 
     # SESSION_COOKIE_DOMAIN = False
-    # SESSION_COOKIE_DOMAIN = 'itman7144.pythonanywhere.com'
+    SESSION_COOKIE_DOMAIN = 'itman7144.pythonanywhere.com'
     # SERVER_NAME = 'itman7144.pythonanywhere.com'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
