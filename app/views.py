@@ -1,4 +1,6 @@
-from flask import render_template, redirect, url_for
+import os
+
+from flask import render_template, redirect, url_for, session, g
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -189,7 +191,25 @@ def register():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+
+    from flask_wtf.csrf import generate_csrf, validate_csrf
+    secret_key = app.config['SECRET_KEY']
+    # default: WTF_CSRF_FIELD_NAME = 'csrf_token'
+    token_key = app.config['WTF_CSRF_FIELD_NAME']
+    csrf_token = generate_csrf(secret_key=secret_key, token_key=token_key)
+    # app.logger.debug(fname + ': csrf_token = {}'.format(csrf_token))
+    validated = False
+    try:
+        validate_csrf(csrf_token, secret_key=secret_key, time_limit=3600, token_key=token_key)
+        validated = True
+    except:
+        pass
+    # app.logger.debug(fname + ': validated = {}'.format(validated))
+
+    # session['csrf_token']: os.urandom(16).hex()
     form = LoginForm()
+    # g.csrf_token: os.urandom(16).hex()
+
     data = {
         'categories': Category.query.all(),
         'is_auth': True if current_user.is_authenticated else False,

@@ -6,6 +6,7 @@ class Config:
 
     # SECRET_KEY = os.urandom(16).hex()
     SECRET_KEY = os.getenv('SECRET_KEY')
+    # WTF_CSRF_TIME_LIMIT = 5
     # WTF_CSRF_SECRET_KEY = os.urandom(16).hex()
     # WTF_CSRF_SECRET_KEY = os.getenv('WTF_CSRF_SECRET_KEY')
     # WTF_CSRF_CHECK_DEFAULT = True
