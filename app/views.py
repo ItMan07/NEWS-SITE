@@ -40,7 +40,7 @@ def news_detail(news_id):
     is_admin = False
     if current_user.is_authenticated:
         user = User.query.get(current_user.id)
-        is_admin = True if user.admin else False
+        is_admin = True if user.admin == 1 else False
         # is_author = True if News.query.get(news_id).author_id == user_id else False
 
     data = {
@@ -55,6 +55,27 @@ def news_detail(news_id):
 
 
 @app.route('/create_news', methods=['POST', 'GET'])
+@login_required
+def create_news():
+    form = NewsForm()
+    data = {
+        'categories': Category.query.all(),
+        'is_auth': True if current_user.is_authenticated else False,
+        'show_categories': False
+    }
+
+    if form.validate_on_submit():
+        news = News()
+        news.title = form.title.data
+        news.text = form.text.data
+        news.category_id = form.category.data
+        db.session.add(news)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('create_news.html', form=form, data=data)
+
+
+@app.route('/create_news_hidden', methods=['POST', 'GET'])
 # @login_required
 def create_news():
     form = NewsForm()
