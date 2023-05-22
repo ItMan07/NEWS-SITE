@@ -4,7 +4,6 @@
 {% block content %}
     <h1 class="text-center"> Вход в аккаунт </h1><br>
     <hr>
-
     <form method="post" action="" novalidate>
         {{ form.csrf_token }}
         {#        {{ form.hidden_tag() }}#}
@@ -18,9 +17,9 @@
                 </div>
                 {% for error in form.username.errors %}
                     <div class="alert alert-danger" role="alert">
-                <span>
-                    {{ error }}
-                </span>
+                        <span>
+                            {{ error }}
+                        </span>
                     </div>
                 {% endfor %}
             </div>
@@ -35,9 +34,9 @@
                 </div>
                 {% for error in form.password.errors %}
                     <div class="alert alert-danger" role="alert">
-                <span>
-                    {{ error }}
-                </span>
+                        <span>
+                            {{ error }}
+                        </span>
                     </div>
                 {% endfor %}
             </div>

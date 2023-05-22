@@ -11,7 +11,7 @@ def get_categories():
 
 
 class NewsForm(FlaskForm):
-    title = StringField('Название', default=None, validators=[
+    title = StringField('Название', validators=[
         DataRequired(message='Да ты йёнутый! Иди лечись пока не поздно! Заполни поле, тебе же сказали!'),
         length(max=255, min=3, message='Введи заголовок длиной от 3 до 255 символов!')])
     text = TextAreaField(

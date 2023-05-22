@@ -164,7 +164,7 @@ def register():
     return render_template('register.html', form=form, data=data)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
     form = LoginForm()
     data = {
@@ -189,7 +189,7 @@ def login():
     return render_template('login.html', form=form, data=data)
 
 
-@app.route('/profile/<int:user_id>', methods=['GET', 'POST'])
+@app.route('/profile/<int:user_id>', methods=['POST', 'GET'])
 def profile(user_id):
     data = {
         'categories': Category.query.all(),
