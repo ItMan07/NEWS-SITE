@@ -12,6 +12,6 @@ class Config:
 
     # SESSION_COOKIE_DOMAIN = False
     # SESSION_COOKIE_DOMAIN = 'itman7144.pythonanywhere.com'
-    SERVER_NAME = 'itman7144.pythonanywhere.com'
+    # SERVER_NAME = 'itman7144.pythonanywhere.com'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
