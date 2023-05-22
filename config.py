@@ -6,5 +6,5 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
     WTF_CSRF_SECRET_KEY = os.getenv('WTF_CSRF_SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # SESSION_COOKIE_DOMAIN = False
-    SERVER_NAME = 'itman7144.pythonanywhere.com'
+    SESSION_COOKIE_DOMAIN = False
+    # SERVER_NAME = 'itman7144.pythonanywhere.com'
