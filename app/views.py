@@ -55,7 +55,7 @@ def news_detail(news_id):
 
 
 @app.route('/create_news', methods=['POST', 'GET'])
-@login_required
+# @login_required
 def create_news():
     form = NewsForm()
     data = {
