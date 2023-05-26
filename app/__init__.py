@@ -2,6 +2,9 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
+from .models import *
+from .views import *
+
 # from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
@@ -10,9 +13,6 @@ app = Flask(__name__)
 app.config.from_object('config.Config')
 
 db = SQLAlchemy(app)
-from .views import *
-from .models import *
-
 app.app_context().push()
 db.create_all()
 manager = LoginManager(app)
