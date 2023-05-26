@@ -18,9 +18,9 @@
     {#            form.elements['openid'].value = openid#}
     {#        }#}
     {#    </script>#}
-    <h1>Sign In</h1>
+    {#    <h1>Sign In</h1>#}
     <form method="POST" action="" novalidate>
-        {#        {{ form.hidden_tag() }}#}
+        {{ form.hidden_tag() }}
         {#        <p>#}
         {#            Please enter your OpenID, or select one of the providers below:<br>#}
         {#            {{ form.openid(size=80) }}#}
@@ -33,7 +33,7 @@
         {#        </p>#}
         {#        <p>{{ form.remember_me }} Remember Me</p>#}
 
-        {{ form.csrf_token() }}
+        {#        {{ form.csrf_token() }}#}
         <div class="row justify-content-center">
             <div class="col-8 text-center">
                 <div class="form-group">

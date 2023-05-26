@@ -199,7 +199,7 @@ def register():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    app.config['SECRET_KEY'] = os.urandom(16).hex()
+    # app.config['SECRET_KEY'] = os.urandom(16).hex()
     form = LoginForm()
 
     data = {
