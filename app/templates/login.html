@@ -4,35 +4,8 @@
 {% block content %}
     <h1 class="text-center"> Вход в аккаунт </h1><br>
     <hr>
-
-    {#    <script type="text/javascript">#}
-    {#        function set_openid(openid, pr) {#}
-    {#            let u = openid.search('<username>')#}
-    {#            let user;#}
-    {#            if (u !== -1) {#}
-    {#                // openid requires username#}
-    {#                user = prompt('Enter your ' + pr + ' username:')#}
-    {#                openid = openid.substr(0, u) + user#}
-    {#            }#}
-    {#            let form = document.forms['login'];#}
-    {#            form.elements['openid'].value = openid#}
-    {#        }#}
-    {#    </script>#}
-    {#    <h1>Sign In</h1>#}
     <form method="POST" action="" novalidate>
         {{ form.hidden_tag() }}
-        {#        <p>#}
-        {#            Please enter your OpenID, or select one of the providers below:<br>#}
-        {#            {{ form.openid(size=80) }}#}
-        {#            {% for error in form.errors.openid %}#}
-        {#                <span style="color: red;">[{{ error }}]</span>#}
-        {#            {% endfor %}<br>#}
-        {#            |{% for pr in providers %}#}
-        {#            <a href="javascript:set_openid('{{ pr.url }}', '{{ pr.name }}');">{{ pr.name }}</a> |#}
-        {#        {% endfor %}#}
-        {#        </p>#}
-        {#        <p>{{ form.remember_me }} Remember Me</p>#}
-
         {#        {{ form.csrf_token() }}#}
         <div class="row justify-content-center">
             <div class="col-8 text-center">
@@ -68,29 +41,27 @@
                 {% endfor %}
             </div>
         </div>
-
-        {#        <div class="row justify-content-center">#}
-        {#            <div class="col-8 text-center">#}
-        {#                <div class="form-group form-check">#}
-        {#                    <label>#}
-        {#                        {{ form.remain_me.label }}#}
-        {#                    </label>#}
-        {#                    {{ form.remain_me(class="form-check-input") }}#}
-        {#                </div>#}
-        {#                {% for error in form.remain_me.errors %}#}
-        {#                    <div class="alert alert-danger" role="alert">#}
-        {#                <span>#}
-        {#                    {{ error }}#}
-        {#                </span>#}
-        {#                    </div>#}
-        {#                {% endfor %}#}
-        {#            </div>#}
-        {#        </div>#}
+        <div class="row justify-content-center">
+            <div class="col-8 text-center">
+                <div class="form-group form-check">
+                    <label>
+                        {{ form.remain_me.label }}
+                    </label>
+                    {{ form.remain_me(class="form-check-input") }}
+                </div>
+                {% for error in form.remain_me.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <span>
+                            {{ error }}
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
         <br>
-
         {#        <div class="row justify-content-center form-check">#}
         {#            <div class="col text-center">#}
-        {#                <input type="checkbox" >#}
+        {#                <input type="checkbox">#}
         {#                {{ form.remain_me(class="form-check-input") }}#}
         {#            </div>#}
         {#        </div>#}
