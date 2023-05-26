@@ -214,6 +214,7 @@ def login():
     # # app.logger.debug(fname + ': validated = {}'.format(validated))
     #
     # # session['csrf_token']: os.urandom(16).hex()
+    app.config['SECRET_KEY'] = os.urandom(16).hex()
     form = LoginForm()
     # # g.csrf_token: os.urandom(16).hex()
 
