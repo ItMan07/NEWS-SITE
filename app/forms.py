@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, EmailField, PasswordField, SelectField, RadioField
+from wtforms import StringField, TextAreaField, SubmitField, EmailField, PasswordField, SelectField, BooleanField
 from wtforms.validators import DataRequired, length, Optional
 
 from .models import Category
@@ -30,6 +30,8 @@ class CategoriesForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
+    # openid = StringField('openid', validators=[DataRequired()])
+    # remember_me = BooleanField('remember_me', default=False)
     username = StringField('Имя пользователя', validators=[
         DataRequired(message='Да ты йёнутый! Иди лечись пока не поздно! Заполни поле, тебе же сказали!'),
         length(max=255, min=3, message='Введи имя пользователя длиной от 3 до 255 символов!')])
@@ -37,7 +39,7 @@ class LoginForm(FlaskForm):
         DataRequired(message='Да ты йёнутый! Иди лечись пока не поздно! Заполни поле, тебе же сказали!'),
         length(max=255, min=3, message='Введи пароль длиной от 3 до 255 символов!')
     ])
-    # remain_me = RadioField('Запомнить меня', default=False)
+    remain_me = BooleanField('Запомнить меня', default=False)
     submit = SubmitField('Вызвать ОМОН')
 
 
