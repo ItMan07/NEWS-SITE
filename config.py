@@ -12,7 +12,7 @@ class Config:
     # WTF_CSRF_SECRET_KEY = os.getenv('WTF_CSRF_SECRET_KEY')
     # WTF_CSRF_CHECK_DEFAULT = True
 
-    # SESSION_COOKIE_DOMAIN = False
+    SESSION_COOKIE_DOMAIN = False
     # SESSION_COOKIE_DOMAIN = 'itman7144.pythonanywhere.com'
     SERVER_NAME = 'itman7144.pythonanywhere.com'
 
