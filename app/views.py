@@ -11,10 +11,17 @@ from .models import *
 
 # TODO:
 #  1. БД: автор статьи
-#  2. БД: проверять админку
+#  2. БД: проверять админка
 #  3. БД: страница профиля
 #  4. доделать футер
 #  5. доделать редактирование (нет дефолтного значения категории и текста)
+
+@app.before_request
+def fix_missing_csrf_token():
+    if app.config['WTF_CSRF_FIELD_NAME'] not in session:
+        if app.config['WTF_CSRF_FIELD_NAME'] in g:
+            g.pop(app.config['WTF_CSRF_FIELD_NAME'])
+
 
 @app.route('/')
 def index():
@@ -39,21 +46,22 @@ def about():
 
 @app.route('/news/<int:news_id>')
 def news_detail(news_id):
-    is_admin, is_auth = False, False
-    if current_user.is_anonymous:
-        is_admin, is_auth = False, False
-    elif current_user.is_authenticated:
-        user = User.query.get(current_user.id)
-        is_admin = True if user.admin == 1 else False
-        # is_author = True if News.query.get(news_id).author_id == user_id else False
+    # is_admin, is_auth = False, False
+    # if current_user.is_anonymous:
+    #     is_admin, is_auth = False, False
+    # if :
+    #     user = User.query.get(current_user.id)
+    # is_admin = True if user.admin == 1 else False
+    # is_author = True if News.query.get(news_id).author_id == user_id else False
 
     data = {
         'news': News.query.get(news_id),
         'categories': Category.query.all(),
-        'is_auth': is_auth,
+        'is_auth': True if current_user.is_authenticated else False,
         'show_categories': True,
         # 'is_author': is_author,
-        'is_admin': is_admin
+        'is_admin': True if current_user.is_authenticated and
+                            User.query.get(current_user.id).admin else False
     }
     return render_template('news_detail.html', data=data)
 
@@ -191,24 +199,23 @@ def register():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-
-    from flask_wtf.csrf import generate_csrf, validate_csrf
-    secret_key = app.config['SECRET_KEY']
-    # default: WTF_CSRF_FIELD_NAME = 'csrf_token'
-    token_key = app.config['WTF_CSRF_FIELD_NAME']
-    csrf_token = generate_csrf(secret_key=secret_key, token_key=token_key)
-    # app.logger.debug(fname + ': csrf_token = {}'.format(csrf_token))
-    validated = False
-    try:
-        validate_csrf(csrf_token, secret_key=secret_key, time_limit=3600, token_key=token_key)
-        validated = True
-    except:
-        pass
-    # app.logger.debug(fname + ': validated = {}'.format(validated))
-
-    # session['csrf_token']: os.urandom(16).hex()
+    # from flask_wtf.csrf import generate_csrf, validate_csrf
+    # secret_key = app.config['SECRET_KEY']
+    # # default: WTF_CSRF_FIELD_NAME = 'csrf_token'
+    # token_key = app.config['WTF_CSRF_FIELD_NAME']
+    # csrf_token = generate_csrf(secret_key=secret_key, token_key=token_key)
+    # # app.logger.debug(fname + ': csrf_token = {}'.format(csrf_token))
+    # validated = False
+    # # try:
+    # validate_csrf(csrf_token, secret_key=secret_key, time_limit=3600, token_key=token_key)
+    # validated = True
+    # # except:
+    # #     pass
+    # # app.logger.debug(fname + ': validated = {}'.format(validated))
+    #
+    # # session['csrf_token']: os.urandom(16).hex()
     form = LoginForm()
-    # g.csrf_token: os.urandom(16).hex()
+    # # g.csrf_token: os.urandom(16).hex()
 
     data = {
         'categories': Category.query.all(),
@@ -234,12 +241,14 @@ def login():
 
 @app.route('/profile/<int:user_id>', methods=['POST', 'GET'])
 def profile(user_id):
-    user = User.query.get(current_user.id)
+    if current_user.is_authenticated:
+        user = User.query.get(current_user.id)
+        user_data = [user.username, user.email, user.reg_date, user.admin]
     data = {
         'categories': Category.query.all(),
         'is_auth': True if current_user.is_authenticated else False,
         'show_categories': False,
-        'user_data': [user.username, user.email, user.reg_date, user.admin]
+        'user_data': user_data
     }
     return render_template('profile.html', data=data)
 
