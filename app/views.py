@@ -1,6 +1,6 @@
 import os
 
-from flask import render_template, redirect, url_for, session, g, flash
+from flask import render_template, redirect, url_for, session, g, flash, abort, request
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -21,6 +21,12 @@ from .models import *
 #     if app.config['WTF_CSRF_FIELD_NAME'] not in session:
 #         if app.config['WTF_CSRF_FIELD_NAME'] in g:
 #             g.pop(app.config['WTF_CSRF_FIELD_NAME'])
+@app.before_request
+def csrf_protect():
+    if request.method == "POST":
+        csrf_token = session.pop("_csrf_token", None)
+        if not csrf_token or csrf_token != request.form.get("_csrf_token"):
+            abort(403)
 
 
 @app.route('/')
@@ -194,13 +200,54 @@ def register():
         print('register user')
         return redirect(url_for('login'))
 
-    return render_template('register.html', form=form, data=data)
+    return render_template('register.html', form=form, data=data, csrf_token=session["_csrf_token"])
+
+
+# Для создания уникального CSRF-токена для каждого посетителя сайта в Flask можно использовать модуль
+# secrets для генерации случайного токена при каждом запросе.
+#
+# Вот пример кода, который генерирует уникальный CSRF-токен для каждого запроса в Flask:
+
+# from flask import Flask, session
+# import secrets
+#
+# app = Flask(__name__)
+#
+# @app.before_request
+# def csrf_protect():
+#     if request.method == "POST":
+#         csrf_token = session.pop("_csrf_token", None)
+#         if not csrf_token or csrf_token != request.form.get("_csrf_token"):
+#             abort(403)
+#
+# @app.route("/")
+# def index():
+#     session["_csrf_token"] = secrets.token_hex(16)
+#     return render_template("index.html", csrf_token=session["_csrf_token"])
+#
+# В этом примере мы используем декоратор before_request, чтобы проверить CSRF-токен при каждом POST-запросе.
+# Если CSRF-токен не совпадает с токеном, сохраненным в сессии, мы вызываем ошибку 403.
+#
+# В функции маршрутизации index() мы генерируем уникальный CSRF-токен с помощью функции secrets.token_hex(16) и
+# сохраняем его в сессии. Затем мы возвращаем шаблон index.html с CSRF-токеном в качестве аргумента.
+#
+# В шаблоне index.html мы можем использовать CSRF-токен в форме следующим образом:
+#
+# <form method="post">
+#     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+#     <!-- остальные поля формы -->
+# </form>
+#
+# Здесь мы добавляем скрытое поле _csrf_token в форму и устанавливаем его значение равным CSRF-токену,
+# переданному из Flask-приложения. Таким образом, при каждом запросе генерируется
+# новый уникальный CSRF-токен, который используется для защиты от CSRF-атак.
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     # app.config['SECRET_KEY'] = os.urandom(16).hex()
-    session['CSRF_TOKEN'] = os.urandom(16).hex()
+    # session['CSRF_TOKEN'] = os.urandom(16).hex()
+    session["_csrf_token"] = os.urandom(16).hex()
     form = LoginForm()
 
     data = {
