@@ -1,4 +1,5 @@
 import os
+import secrets
 
 from flask import render_template, redirect, url_for, session, g, flash, abort, request
 from flask_login import login_required, login_user, logout_user, current_user
@@ -247,8 +248,8 @@ def register():
 def login():
     # app.config['SECRET_KEY'] = os.urandom(16).hex()
     # session['CSRF_TOKEN'] = os.urandom(16).hex()
-    session["_csrf_token"] = os.urandom(16).hex()
-    form = LoginForm()
+    session["_csrf_token"] = secrets.token_hex(16)
+    form = LoginForm(csrf_protect=session["_csrf_token"])
 
     data = {
         'categories': Category.query.all(),
