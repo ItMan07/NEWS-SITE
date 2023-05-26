@@ -45,11 +45,11 @@
             <div class="col-8 text-center">
                 <div class="form-group form-check">
                     <label>
-                        {{ form.remain_me.label }}
+                        {{ form.remember_me.label }}
                     </label>
-                    {{ form.remain_me(class="form-check-input") }}
+                    {{ form.remember_me(class="form-check-input") }}
                 </div>
-                {% for error in form.remain_me.errors %}
+                {% for error in form.remember_me.errors %}
                     <div class="alert alert-danger" role="alert">
                         <span>
                             {{ error }}

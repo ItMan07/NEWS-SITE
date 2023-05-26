@@ -21,3 +21,7 @@ manager = LoginManager(app)
 @manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
+
+# 205047
+205047

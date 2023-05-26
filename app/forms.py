@@ -39,7 +39,7 @@ class LoginForm(FlaskForm):
         DataRequired(message='Да ты йёнутый! Иди лечись пока не поздно! Заполни поле, тебе же сказали!'),
         length(max=255, min=3, message='Введи пароль длиной от 3 до 255 символов!')
     ])
-    remain_me = BooleanField('Запомнить меня', default=False)
+    remember_me = BooleanField('Запомнить меня', default=False)
     submit = SubmitField('Вызвать ОМОН')
 
 

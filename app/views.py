@@ -211,9 +211,10 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
+        remember = form.remember_me.data
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
-            login_user(user)
+            login_user(user, remember=remember)
             print('login user')
             return redirect(url_for('index'))
         else:
@@ -237,7 +238,9 @@ def login():
 
 
 @app.route('/profile/<int:user_id>', methods=['POST', 'GET'])
+@login_required
 def profile(user_id):
+    user_data = []
     if current_user.is_authenticated:
         user = User.query.get(current_user.id)
         user_data = [user.username, user.email, user.reg_date, user.admin]
